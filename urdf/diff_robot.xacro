@@ -1,0 +1,60 @@
+<?xml version="1.0" ?>
+<!-- Differential drive robot -->
+
+<robot name="diff_robot" xmlns:xacro="http://www.ros.org/wiki/xacro">
+<xacro:include filename="$(find mobile_robot)/urdf/materials.xacro" />
+<xacro:include filename="$(find mobile_robot)/urdf/diff_robot.gazebo" />
+<xacro:include filename="$(find mobile_robot)/urdf/macros.xacro" />
+
+<!-- Base of a robot -->
+<xacro:base_cylinder name="base" l_rpy="0 0 0" l_xyz="0 0 0" mass="0.5" r="0.15" l="0.01"  />  
+
+<!-- Base top -->
+<xacro:base_cylinder name="top" l_rpy="0 0 0" l_xyz="0 0 0" mass="0.1" r="0.15" l="0.01"  />  
+
+<!-- fixing top on base of robot -->
+<xacro:custom_joint name="base_top_joint" joint_type="fixed" j_axis="0 0 1" j_parent="base" j_child="top" j_rpy="0 0 0" j_xyz="0 0 0.05" />
+
+<!-- camera box -->
+<xacro:custom_box name="box_camera" b_rpy="0 0 0" b_xyz="0 0 0" b_mass="0.02" b_x="0.03" b_y="0.02" b_z="0.03" /> 
+
+<!-- fixing camera on top base -->
+<xacro:custom_joint name="top_camera_joint" joint_type="fixed" j_axis="0 0 1" j_parent="top" j_child="box_camera" j_rpy="0 0 -1.57" j_xyz="0 -0.12 0.015" />
+
+
+<!-- left wheel  -->
+<xacro:base_cylinder name="left_wheel" l_rpy="0 1.57 0" l_xyz="0 0 0" mass="0.2" r="0.05" l="0.01"  /> 
+
+<!-- joining left wheel to base -->
+<xacro:custom_joint name="base_left_wheel_joint" joint_type="continuous" j_axis="1 0 0" j_parent="base" j_child="left_wheel" j_rpy="0 0 0" j_xyz="0.16 0.02 0" />  
+
+<!-- rigt wheel -->
+<xacro:base_cylinder name="right_wheel" l_rpy="0 1.57 0" l_xyz="0 0 0" mass="0.2" r="0.05" l="0.01"  />
+
+<!-- joining right wheel to base -->
+<xacro:custom_joint name="base_right_wheel_joint" joint_type="continuous" j_axis="1 0 0" j_parent="base" j_child="right_wheel" j_rpy="0 0 0" j_xyz="-0.16 0.02 0" />  
+
+<!-- castor link -->
+<xacro:base_cylinder name="castor_support" l_rpy="0 0 0" l_xyz="0 0 0" mass="0.05" r="0.02" l="0.04"  /> 
+
+<!-- castor connection -->
+<xacro:custom_joint name="castor_support_base_joint" joint_type="fixed" j_axis="0 0 1" j_parent="base" j_child="castor_support" j_rpy="0 0 0" j_xyz="0 -0.12 -0.015" />   
+
+<!-- castor wheel -->
+<xacro:custom_sphere name="castor_wheel" s_rpy="0 0 0" s_xyz="0 0 0" s_mass="0.05" s_r="0.02"/>
+
+<!-- castor wheel connection to link -->
+<xacro:custom_joint name="castor_wheel_castor_support_joint" joint_type="continuous" j_axis="0 0 1" j_parent="castor_support" j_child="castor_wheel" j_rpy="0 0 0" j_xyz="0 0 -0.02" /> 
+
+
+
+
+</robot>
+
+
+
+
+
+
+
+
